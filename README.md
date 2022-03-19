@@ -8,10 +8,8 @@ Molim vas izmijenite ovaj dokument kako bi u njega naveli naziv i kratak opisa p
 A sada, vrijeme je da malo izmijenite ovaj dokument. Za upis/opis vašeg programskog proizvoda molimo vas koristite **predložak** koji je naveden u nastavku, a započnite tako da kliknete na *olovku* u desnom gornjem kutu ovoga dokumenta, te izbrišite sve što je iznad Naziva projekta, kao i sve upute koje su navedene u zagradama u predlošku ispod :) 
 
 # Zadatak - mikrobiološki laboratorij 
-(u redak iznad navedite naziv projekta kojeg ste dobili za analizu)
 
 ## Podaci o studentu
-(ispod promijenite samo drugi redak tablice)
 
 Ime i prezime | E-mail adresa (FOI) | JMBAG | Github korisničko ime
 ------------  | ------------------- | ----- | ---------------------
