@@ -13,7 +13,7 @@ A sada, vrijeme je da malo izmijenite ovaj dokument. Za upis/opis vašeg program
 
 Ime i prezime | E-mail adresa (FOI) | JMBAG | Github korisničko ime
 ------------  | ------------------- | ----- | ---------------------
-Ime i prezime | lpejakovi20@foi.hr | 0016150223 | lpejakovi20
+Lovro Pejaković | lpejakovi20@foi.hr | 0016150223 | lpejakovi20
 
 
 ## Opis domene
