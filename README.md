@@ -7,7 +7,7 @@ Molim vas izmijenite ovaj dokument kako bi u njega naveli naziv i kratak opisa p
 
 A sada, vrijeme je da malo izmijenite ovaj dokument. Za upis/opis vašeg programskog proizvoda molimo vas koristite **predložak** koji je naveden u nastavku, a započnite tako da kliknete na *olovku* u desnom gornjem kutu ovoga dokumenta, te izbrišite sve što je iznad Naziva projekta, kao i sve upute koje su navedene u zagradama u predlošku ispod :) 
 
-# Naziv projekta
+# Zadatak - mikrobiološki laboratorij 
 (u redak iznad navedite naziv projekta kojeg ste dobili za analizu)
 
 ## Podaci o studentu
@@ -15,7 +15,7 @@ A sada, vrijeme je da malo izmijenite ovaj dokument. Za upis/opis vašeg program
 
 Ime i prezime | E-mail adresa (FOI) | JMBAG | Github korisničko ime
 ------------  | ------------------- | ----- | ---------------------
-Ime i prezime | mojaadresa@foi.hr | 000000000 | githubuser
+Ime i prezime | lpejakovi20@foi.hr | 0016150223 | lpejakovi20
 
 
 ## Opis domene
