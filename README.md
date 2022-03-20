@@ -17,10 +17,11 @@ Lovro Pejaković | lpejakovi20@foi.hr | 0016150223 | lpejakovi20
 
 
 ## Opis domene
-Umjesto ovih uputa vlastitim riječima opišite domenu ili problem koji pokriva projekt za vaše zadaće. 
+Ovaj se projekt odnosi na razvoj softvera za praćenje analize uzoraka krvi i urina u mikrobiološkom laboratoriju. Taj se proces praćenja analize do sada provodio pisanjem na papir, a zadatak softvera koji se razvija jest digitalizirati taj proces. 
 
 ## Specifikacija projekta
-Umjesto ovih uputa vlastitim riječima opišite zahtjeve za funkcionalnošću programskog proizvoda.
+Od programskog rješenja očekuju se sljedeće mogućnosti: unos podataka o nasadi i izolatu, evidencija zaprimljenih uzoraka krvi i urina, pretraživanje radnih naloga po parametrima, detaljan prikaz naloga te pohrana i prikaz podataka o povijesti analiza za pojedinog pacijenta. 
+//Umjesto ovih uputa vlastitim riječima opišite zahtjeve za funkcionalnošću programskog proizvoda.
 
 ## Zadatak
 U root repozitorija učitajte zadatak koji ste dobili i potom ovdje stavite link na njegovo otvaranje.
