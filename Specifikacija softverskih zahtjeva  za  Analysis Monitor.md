@@ -1,1 +1,0 @@
-# Specifikacija softverskih zahtjeva za Analysis Monitor
