@@ -14,6 +14,8 @@ Ovaj se projekt odnosi na razvoj softvera za praćenje analize uzoraka krvi i ur
 Od programskog rješenja očekuju se sljedeće mogućnosti: unos podataka o nasadi i izolatu, evidencija zaprimljenih uzoraka krvi i urina, pretraživanje radnih naloga po parametrima, detaljan prikaz naloga te pohrana i prikaz podataka o povijesti analiza za pojedinog pacijenta. 
 
 ## Zadatak
+[Link](https://github.com/foivz/pi22-zadace-lpejakovi20/blob/master/Korisni%C4%8Dki%20zahtjevi%20ZS%20-%20mikrobiolo%C5%A1ki%20laboratorij.pdf)
+
 //U root repozitorija učitajte zadatak koji ste dobili i potom ovdje stavite link na njegovo otvaranje.
 
 ## Resursi
