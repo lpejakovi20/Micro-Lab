@@ -63,6 +63,7 @@
             // 
             // txtPatientId
             // 
+            this.txtPatientId.Enabled = false;
             this.txtPatientId.Location = new System.Drawing.Point(357, 123);
             this.txtPatientId.Name = "txtPatientId";
             this.txtPatientId.Size = new System.Drawing.Size(171, 22);
@@ -173,6 +174,7 @@
             this.Controls.Add(this.txtSampleId);
             this.Name = "FrmSampleEvidention";
             this.Text = "Evidencija uzorka";
+            this.Load += new System.EventHandler(this.FrmSampleEvidention_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

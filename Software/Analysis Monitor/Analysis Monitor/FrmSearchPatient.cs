@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Analysis_Monitor.Models;
+using Analysis_Monitor.Repositories;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +14,7 @@ namespace Analysis_Monitor
 {
     public partial class FrmPatientSearch : Form
     {
-        string oib = "01234567890";
+        public static Patient SearchedPatient { get; set; }
 
         public FrmPatientSearch()
         {
@@ -26,16 +28,18 @@ namespace Analysis_Monitor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (txtID.Text == "")
-            {
-                txtID.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
-            }
-            else if(txtID.Text == oib)
+            SearchedPatient = PatientRepository.GetPatient(txtID.Text);
+
+            if (SearchedPatient!=null)
             {
                 FrmSampleEvidention frmSampleEvidention = new FrmSampleEvidention();
                 Hide();
                 frmSampleEvidention.ShowDialog();
                 Close();
+            }
+            else
+            {
+                txtID.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
             }
         }
     }
