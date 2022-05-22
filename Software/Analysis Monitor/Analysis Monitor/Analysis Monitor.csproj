@@ -61,13 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataSetSample.cs">
-      <DependentUpon>DataSetSample.xsd</DependentUpon>
+    <Compile Include="FrmSamples.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DataSetSample.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSetSample.xsd</DependentUpon>
+    <Compile Include="FrmSamples.Designer.cs">
+      <DependentUpon>FrmSamples.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmSearchPatient.cs">
       <SubType>Form</SubType>
@@ -90,6 +88,9 @@
     <EmbeddedResource Include="FrmSampleEvidention.resx">
       <DependentUpon>FrmSampleEvidention.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmSamples.resx">
+      <DependentUpon>FrmSamples.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSearchPatient.resx">
       <DependentUpon>FrmSearchPatient.cs</DependentUpon>
     </EmbeddedResource>
@@ -102,17 +103,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="DataSetSample.xsc">
-      <DependentUpon>DataSetSample.xsd</DependentUpon>
-    </None>
-    <None Include="DataSetSample.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSetSample.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="DataSetSample.xss">
-      <DependentUpon>DataSetSample.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

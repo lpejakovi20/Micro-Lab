@@ -41,6 +41,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.txtRecipient = new System.Windows.Forms.TextBox();
             this.lblRecipient = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtSampleId
@@ -154,11 +155,22 @@
             this.lblRecipient.TabIndex = 12;
             this.lblRecipient.Text = "Zaprimatelj:";
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(357, 421);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(97, 33);
+            this.btnCancel.TabIndex = 13;
+            this.btnCancel.Text = "Odustani";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // FrmSampleEvidention
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 509);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblRecipient);
             this.Controls.Add(this.txtRecipient);
             this.Controls.Add(this.btnSave);
@@ -195,5 +207,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtRecipient;
         private System.Windows.Forms.Label lblRecipient;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

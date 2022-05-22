@@ -31,6 +31,24 @@ namespace Analysis_Monitor.Repositories
             return sample;
         }
 
+        public static List<Sample> GetSamples()
+        {
+            var samples = new List<Sample>();
+            SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Samples", DB);
+            DB.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Sample sample = CreateObject(reader);
+                samples.Add(sample);
+            }
+
+            reader.Close();
+            return samples;
+        }
+
         private static Sample CreateObject(SqlDataReader reader)
         {
             int idSample = int.Parse(reader["IdSample"].ToString());
@@ -42,6 +60,7 @@ namespace Analysis_Monitor.Repositories
             var sample = new Sample
             {
                 IdSample = idSample,
+                idPatient = idPatient,
                 TimeOfReceipt = timeOfReceipt,
                 SampleInfo = sampleInfo,
                 SampleType = sampleType
