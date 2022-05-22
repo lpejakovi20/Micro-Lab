@@ -115,6 +115,7 @@
             // 
             // txtTimeOfReceipt
             // 
+            this.txtTimeOfReceipt.Enabled = false;
             this.txtTimeOfReceipt.Location = new System.Drawing.Point(357, 161);
             this.txtTimeOfReceipt.Name = "txtTimeOfReceipt";
             this.txtTimeOfReceipt.Size = new System.Drawing.Size(171, 22);

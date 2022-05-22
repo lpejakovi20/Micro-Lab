@@ -16,7 +16,7 @@ namespace Analysis_Monitor.Repositories
             Sample sample = null;
 
             SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Samples WHERE IdSample = { id }", DB);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Samples WHERE IdSample = '" + id + "'", DB);
             DB.Open();
             SqlDataReader reader = cmd.ExecuteReader();
    
@@ -54,14 +54,16 @@ namespace Analysis_Monitor.Repositories
             int idSample = int.Parse(reader["IdSample"].ToString());
             string idPatient = reader["IdPatient"].ToString();
             DateTime timeOfReceipt = DateTime.Parse(reader["TimeOfReceipt"].ToString());
+            string idEmployee = reader["IdEmployee"].ToString();
             string sampleType = reader["SampleType"].ToString();
             string sampleInfo = reader["SampleInfo"].ToString();
 
             var sample = new Sample
             {
                 IdSample = idSample,
-                idPatient = idPatient,
+                IdPatient = idPatient,
                 TimeOfReceipt = timeOfReceipt,
+                IdEmployee = idEmployee,
                 SampleInfo = sampleInfo,
                 SampleType = sampleType
             };

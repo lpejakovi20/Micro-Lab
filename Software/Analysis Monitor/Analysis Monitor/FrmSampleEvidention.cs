@@ -16,59 +16,94 @@ namespace Analysis_Monitor
 {
     public partial class FrmSampleEvidention : Form
     {
-        public FrmSampleEvidention()
+        private Sample sample;
+        public FrmSampleEvidention(Sample selectedSample)
         {
             InitializeComponent();
 
-            var SampleType =
-               new[] { "Urin", "Krv" };
+            sample = selectedSample;
 
+            var SampleType = new[] { "Urin", "Krv" };
             cboSampleType.DataSource = SampleType;
             cboSampleType.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            txtPatientId.Text = FrmPatientSearch.SearchedPatient.IdPatient;
+            if (selectedSample == null)
+            {
+                txtPatientId.Text = FrmPatientSearch.SearchedPatient.IdPatient;
 
-            var pomocna = SampleRepository.GetMaxID().IdSample;
-            var druga = (pomocna + 1).ToString();
-            txtSampleId.Text = druga;
+                var pomocna = SampleRepository.GetMaxID().IdSample;
+                var druga = (pomocna + 1).ToString();
+                txtSampleId.Text = druga;
 
-            txtTimeOfReceipt.Text = DateTime.Now.ToString();
+                txtTimeOfReceipt.Text = DateTime.Now.ToString();
+            }
+            else
+            {
+                Sample newSample = SampleRepository.GetSample(selectedSample.IdSample);
+                txtSampleId.Text= newSample.IdSample.ToString();
+                txtPatientId.Text = newSample.IdPatient.ToString();
+                txtTimeOfReceipt.Text = newSample.TimeOfReceipt.ToString();
+                txtRecipient.Text = newSample.IdEmployee.ToString();
+                cboSampleType.Text = newSample.SampleType.ToString();
+                txtSampleInfo.Text = newSample.SampleInfo.ToString();
+            }
            
 
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-
-            if(txtRecipient.Text != "" && txtSampleInfo.Text != "")
-            {
-                SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-                DB.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Samples (IdPatient,TimeOfReceipt,SampleType,SampleInfo) VALUES (@IdPatient,@TimeOfReceipt,@SampleType,@SampleInfo)", DB);
-                cmd.Parameters.AddWithValue("@IdPatient", txtPatientId.Text);
-                cmd.Parameters.AddWithValue("@SampleType", cboSampleType.Text);
-                cmd.Parameters.AddWithValue("@SampleInfo", txtSampleInfo.Text);
-                cmd.Parameters.AddWithValue("@TimeOfReceipt", DateTime.Parse(txtTimeOfReceipt.Text));
-                cmd.ExecuteNonQuery();
-                DB.Close();
-
-                MessageBox.Show("Uzorak uspješno evidentiran!", "Uzorak evidentiran!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                FrmSamples frmSamples = new FrmSamples();
-                Hide();
-                frmSamples.ShowDialog();
-                Close();
-            }
-            else
-            {
-                if(txtRecipient.Text == "")
+                if (txtRecipient.Text.Length == 11 && txtSampleInfo.Text != "")
                 {
-                    txtRecipient.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
-                }
-                else if(txtSampleInfo.Text == "")
-                {
-                    txtSampleInfo.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
+
+                    if (sample == null)
+                    {
+                        SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
+                        DB.Open();
+                        SqlCommand cmd = new SqlCommand("INSERT INTO Samples (IdPatient,TimeOfReceipt,IdEmployee,SampleType,SampleInfo) VALUES (@IdPatient,@TimeOfReceipt,@IdEmployee,@SampleType,@SampleInfo)", DB);
+                        cmd.Parameters.AddWithValue("@IdPatient", txtPatientId.Text);
+                        cmd.Parameters.AddWithValue("@SampleType", cboSampleType.Text);
+                        cmd.Parameters.AddWithValue("@SampleInfo", txtSampleInfo.Text);
+                        cmd.Parameters.AddWithValue("@TimeOfReceipt", DateTime.Parse(txtTimeOfReceipt.Text));
+                        cmd.Parameters.AddWithValue("@IdEmployee", txtRecipient.Text);
+                        cmd.ExecuteNonQuery();
+                        DB.Close();
+
+                        MessageBox.Show("Uzorak uspješno evidentiran!", "Uzorak evidentiran!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        FrmSamples frmSamples = new FrmSamples();
+                        Hide();
+                        frmSamples.ShowDialog();
+                        Close();
+                    }
+                    else
+                    {
+                        SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
+                        DB.Open();
+                        var id = txtRecipient.Text;
+                        var id2 = cboSampleType.Text;
+                        var id3 = txtSampleInfo.Text;
+                        SqlCommand cmd = new SqlCommand("UPDATE Samples SET IdEmployee = '" + id + "', SampleType = '" + id2 + "', SampleInfo = '" + id3 + "' WHERE IdSample = '" + sample.IdSample + "'", DB);
+                        cmd.ExecuteNonQuery();
+                        DB.Close();
+
+                        MessageBox.Show("Uzorak uspješno izmijenjen!", "Uzorak izmijenjen!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       
+                        Hide();
+                        Close();
                 }
             }
+                else
+                {
+                    if (txtRecipient.Text.Length != 11)
+                    {
+                        txtRecipient.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
+                    }
+                    else if (txtSampleInfo.Text == "")
+                    {
+                        txtSampleInfo.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
+                    }
+                }
+            
         }
 
         private void FrmSampleEvidention_Load(object sender, EventArgs e)

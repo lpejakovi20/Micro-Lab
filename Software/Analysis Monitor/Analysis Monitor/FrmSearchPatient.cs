@@ -32,7 +32,7 @@ namespace Analysis_Monitor
 
             if (SearchedPatient!=null)
             {
-                FrmSampleEvidention frmSampleEvidention = new FrmSampleEvidention();
+                FrmSampleEvidention frmSampleEvidention = new FrmSampleEvidention(null);
                 Hide();
                 frmSampleEvidention.ShowDialog();
                 Close();
