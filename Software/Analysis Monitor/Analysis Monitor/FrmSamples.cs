@@ -48,13 +48,9 @@ namespace Analysis_Monitor
             if (dialogResult == DialogResult.Yes)
             {
                 Sample selectedSample = dgvSamples.CurrentRow.DataBoundItem as Sample;
-                var id = selectedSample.IdSample.ToString();
-
-                string sql = $"DELETE FROM Samples WHERE IdSample = '" + id + "'";
-
-                DB.OpenConnection();
-                DB.ExecuteCommand(sql);
-                DB.CloseConnection();
+                var id = selectedSample.IdSample;
+                SampleRepository.DeleteSample(id);
+                
                 ShowSamples();
             }
         }
@@ -67,9 +63,5 @@ namespace Analysis_Monitor
             ShowSamples();
         }
 
-        private void dgvSamples_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

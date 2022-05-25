@@ -35,7 +35,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(256, 99);
+            this.btnSearch.Location = new System.Drawing.Point(217, 92);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 0;
@@ -47,7 +47,7 @@
             // 
             this.txtID.Location = new System.Drawing.Point(170, 52);
             this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(161, 22);
+            this.txtID.Size = new System.Drawing.Size(96, 22);
             this.txtID.TabIndex = 1;
             // 
             // lblOib

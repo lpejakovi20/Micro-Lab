@@ -30,8 +30,9 @@ namespace Analysis_Monitor
 
             if (selectedSample == null)
             {
-                txtPatientId.Text = FrmPatientSearch.SearchedPatient.IdPatient;
-
+                if (FrmPatientSearch.NewPatient == null) txtPatientId.Text = FrmPatientSearch.SearchedPatient.IdPatient;
+                else txtPatientId.Text = FrmPatientSearch.NewPatient;
+                
                 if (SampleRepository.GetMaxID() != null)
                 {
                     var pomocna = SampleRepository.GetMaxID().IdSample;
@@ -40,10 +41,7 @@ namespace Analysis_Monitor
                 }
                 else
                 {
-                    DB.OpenConnection();
-                    string sql = $"TRUNCATE TABLE Samples";
-                    DB.ExecuteCommand(sql);
-                    DB.CloseConnection();
+                    SampleRepository.RefreshTable();
                     txtSampleId.Text = "1";
                 }
 
@@ -63,21 +61,12 @@ namespace Analysis_Monitor
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-                if (txtRecipient.Text.Length == 11 && txtSampleInfo.Text != "")
+                if (txtRecipient.Text.Length == 11 && txtSampleInfo.Text != "" && txtRecipient.Text.All(char.IsDigit))
                 {
 
                     if (sample == null)
                     {
-                    SqlConnection db = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-                    SqlCommand cmd = new SqlCommand("INSERT INTO Samples (IdPatient,TimeOfReceipt,IdEmployee,SampleType,SampleInfo) VALUES (@IdPatient, @TimeOfReceipt, @IdEmployee,@SampleType,@SampleInfo)", db);
-                    db.Open();
-                    cmd.Parameters.AddWithValue("@IdPatient", txtPatientId.Text);
-                    cmd.Parameters.AddWithValue("@SampleType", cboSampleType.Text);
-                    cmd.Parameters.AddWithValue("@SampleInfo", txtSampleInfo.Text);
-                    cmd.Parameters.AddWithValue("@TimeOfReceipt", DateTime.Parse(txtTimeOfReceipt.Text));
-                    cmd.Parameters.AddWithValue("@IdEmployee", txtRecipient.Text);
-                    cmd.ExecuteNonQuery();
-                    db.Close();
+                        SampleRepository.InsertSample(txtPatientId.Text, DateTime.Parse(txtTimeOfReceipt.Text), txtRecipient.Text, cboSampleType.Text, txtSampleInfo.Text);
       
                         MessageBox.Show("Uzorak uspješno evidentiran!", "Uzorak evidentiran!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Hide();                       
@@ -86,14 +75,8 @@ namespace Analysis_Monitor
                     }
                     else
                     {
-                        DB.OpenConnection();
-                        var id = txtRecipient.Text;
-                        var id2 = cboSampleType.Text;
-                        var id3 = txtSampleInfo.Text;
-                        string sql = $"UPDATE Samples SET IdEmployee = '" + id + "', SampleType = '" + id2 + "', SampleInfo = '" + id3 + "' WHERE IdSample = '" + sample.IdSample + "'";
-                        DB.ExecuteCommand(sql);
-                        DB.CloseConnection();
-
+                        SampleRepository.UpdateSample(txtRecipient.Text, cboSampleType.Text, txtSampleInfo.Text, sample.IdSample);
+                        
                         MessageBox.Show("Uzorak uspješno izmijenjen!", "Uzorak izmijenjen!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                        
                         Hide();
@@ -102,7 +85,7 @@ namespace Analysis_Monitor
             }
                 else
                 {
-                    if (txtRecipient.Text.Length != 11)
+                    if (txtRecipient.Text.Length != 11 || !txtRecipient.Text.All(char.IsDigit))
                     {
                         txtRecipient.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
                     }

@@ -45,7 +45,6 @@
             this.dgvSamples.RowTemplate.Height = 24;
             this.dgvSamples.Size = new System.Drawing.Size(967, 342);
             this.dgvSamples.TabIndex = 0;
-            this.dgvSamples.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSamples_CellContentClick);
             // 
             // btnDelete
             // 

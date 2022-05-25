@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmPatientAddition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPatientAddition.Designer.cs">
+      <DependentUpon>FrmPatientAddition.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmSamples.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PatientRepository.cs" />
     <Compile Include="Repositories\SampleRepository.cs" />
+    <EmbeddedResource Include="FrmPatientAddition.resx">
+      <DependentUpon>FrmPatientAddition.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmSampleEvidention.resx">
       <DependentUpon>FrmSampleEvidention.cs</DependentUpon>
     </EmbeddedResource>

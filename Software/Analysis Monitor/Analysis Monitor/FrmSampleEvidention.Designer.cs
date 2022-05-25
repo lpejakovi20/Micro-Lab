@@ -56,11 +56,11 @@
             // lblSampleId
             // 
             this.lblSampleId.AutoSize = true;
-            this.lblSampleId.Location = new System.Drawing.Point(279, 86);
+            this.lblSampleId.Location = new System.Drawing.Point(269, 86);
             this.lblSampleId.Name = "lblSampleId";
-            this.lblSampleId.Size = new System.Drawing.Size(56, 16);
+            this.lblSampleId.Size = new System.Drawing.Size(69, 16);
             this.lblSampleId.TabIndex = 1;
-            this.lblSampleId.Text = "Uzorak: ";
+            this.lblSampleId.Text = "ID uzorka: ";
             // 
             // txtPatientId
             // 
@@ -73,11 +73,11 @@
             // lblPatientId
             // 
             this.lblPatientId.AutoSize = true;
-            this.lblPatientId.Location = new System.Drawing.Point(277, 129);
+            this.lblPatientId.Location = new System.Drawing.Point(253, 129);
             this.lblPatientId.Name = "lblPatientId";
-            this.lblPatientId.Size = new System.Drawing.Size(61, 16);
+            this.lblPatientId.Size = new System.Drawing.Size(84, 16);
             this.lblPatientId.TabIndex = 3;
-            this.lblPatientId.Text = "Pacijent :";
+            this.lblPatientId.Text = "ID pacijenta :";
             // 
             // cboSampleType
             // 
@@ -150,11 +150,11 @@
             // lblRecipient
             // 
             this.lblRecipient.AutoSize = true;
-            this.lblRecipient.Location = new System.Drawing.Point(257, 202);
+            this.lblRecipient.Location = new System.Drawing.Point(240, 202);
             this.lblRecipient.Name = "lblRecipient";
-            this.lblRecipient.Size = new System.Drawing.Size(77, 16);
+            this.lblRecipient.Size = new System.Drawing.Size(99, 16);
             this.lblRecipient.TabIndex = 12;
-            this.lblRecipient.Text = "Zaprimatelj:";
+            this.lblRecipient.Text = "ID zaprimatelja:";
             // 
             // btnCancel
             // 
