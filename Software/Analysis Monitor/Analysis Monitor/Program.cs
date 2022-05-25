@@ -16,7 +16,7 @@ namespace Analysis_Monitor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmPatientSearch());
+            Application.Run(new FrmSamples());
         }
     }
 }

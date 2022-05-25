@@ -1,4 +1,5 @@
-﻿using Analysis_Monitor.Models;
+﻿using DBLayer;
+using Analysis_Monitor.Models;
 using Analysis_Monitor.Repositories;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,20 @@ namespace Analysis_Monitor
             {
                 txtPatientId.Text = FrmPatientSearch.SearchedPatient.IdPatient;
 
-                var pomocna = SampleRepository.GetMaxID().IdSample;
-                var druga = (pomocna + 1).ToString();
-                txtSampleId.Text = druga;
+                if (SampleRepository.GetMaxID() != null)
+                {
+                    var pomocna = SampleRepository.GetMaxID().IdSample;
+                    var druga = (pomocna + 1).ToString();
+                    txtSampleId.Text = druga;
+                }
+                else
+                {
+                    DB.OpenConnection();
+                    string sql = $"TRUNCATE TABLE Samples";
+                    DB.ExecuteCommand(sql);
+                    DB.CloseConnection();
+                    txtSampleId.Text = "1";
+                }
 
                 txtTimeOfReceipt.Text = DateTime.Now.ToString();
             }
@@ -48,7 +60,6 @@ namespace Analysis_Monitor
                 txtSampleInfo.Text = newSample.SampleInfo.ToString();
             }
            
-
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -57,34 +68,31 @@ namespace Analysis_Monitor
 
                     if (sample == null)
                     {
-                        SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-                        DB.Open();
-                        SqlCommand cmd = new SqlCommand("INSERT INTO Samples (IdPatient,TimeOfReceipt,IdEmployee,SampleType,SampleInfo) VALUES (@IdPatient,@TimeOfReceipt,@IdEmployee,@SampleType,@SampleInfo)", DB);
-                        cmd.Parameters.AddWithValue("@IdPatient", txtPatientId.Text);
-                        cmd.Parameters.AddWithValue("@SampleType", cboSampleType.Text);
-                        cmd.Parameters.AddWithValue("@SampleInfo", txtSampleInfo.Text);
-                        cmd.Parameters.AddWithValue("@TimeOfReceipt", DateTime.Parse(txtTimeOfReceipt.Text));
-                        cmd.Parameters.AddWithValue("@IdEmployee", txtRecipient.Text);
-                        cmd.ExecuteNonQuery();
-                        DB.Close();
-
+                    SqlConnection db = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
+                    SqlCommand cmd = new SqlCommand("INSERT INTO Samples (IdPatient,TimeOfReceipt,IdEmployee,SampleType,SampleInfo) VALUES (@IdPatient, @TimeOfReceipt, @IdEmployee,@SampleType,@SampleInfo)", db);
+                    db.Open();
+                    cmd.Parameters.AddWithValue("@IdPatient", txtPatientId.Text);
+                    cmd.Parameters.AddWithValue("@SampleType", cboSampleType.Text);
+                    cmd.Parameters.AddWithValue("@SampleInfo", txtSampleInfo.Text);
+                    cmd.Parameters.AddWithValue("@TimeOfReceipt", DateTime.Parse(txtTimeOfReceipt.Text));
+                    cmd.Parameters.AddWithValue("@IdEmployee", txtRecipient.Text);
+                    cmd.ExecuteNonQuery();
+                    db.Close();
+      
                         MessageBox.Show("Uzorak uspješno evidentiran!", "Uzorak evidentiran!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        FrmSamples frmSamples = new FrmSamples();
-                        Hide();
-                        frmSamples.ShowDialog();
+                        Hide();                       
                         Close();
+                        
                     }
                     else
                     {
-                        SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-                        DB.Open();
+                        DB.OpenConnection();
                         var id = txtRecipient.Text;
                         var id2 = cboSampleType.Text;
                         var id3 = txtSampleInfo.Text;
-                        SqlCommand cmd = new SqlCommand("UPDATE Samples SET IdEmployee = '" + id + "', SampleType = '" + id2 + "', SampleInfo = '" + id3 + "' WHERE IdSample = '" + sample.IdSample + "'", DB);
-                        cmd.ExecuteNonQuery();
-                        DB.Close();
+                        string sql = $"UPDATE Samples SET IdEmployee = '" + id + "', SampleType = '" + id2 + "', SampleInfo = '" + id3 + "' WHERE IdSample = '" + sample.IdSample + "'";
+                        DB.ExecuteCommand(sql);
+                        DB.CloseConnection();
 
                         MessageBox.Show("Uzorak uspješno izmijenjen!", "Uzorak izmijenjen!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                        
@@ -105,17 +113,15 @@ namespace Analysis_Monitor
                 }
             
         }
-
+        
         private void FrmSampleEvidention_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            FrmPatientSearch frmPatientSearch = new FrmPatientSearch();
             Hide();
-            frmPatientSearch.ShowDialog();
             Close();
         }
     }

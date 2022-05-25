@@ -1,4 +1,5 @@
-﻿using Analysis_Monitor.Models;
+﻿using DBLayer;
+using Analysis_Monitor.Models;
 using Analysis_Monitor.Repositories;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace Analysis_Monitor
 
         private void FrmSamples_Load(object sender, EventArgs e)
         {
+            DB.SetConfiguration("lpejakovi20_DB", "lpejakovi20", "Q=}o18]E");
             ShowSamples();
         }
 
@@ -37,6 +39,7 @@ namespace Analysis_Monitor
         {
             FrmPatientSearch frmPatientSearch = new FrmPatientSearch();
             frmPatientSearch.ShowDialog();
+            ShowSamples();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -46,11 +49,12 @@ namespace Analysis_Monitor
             {
                 Sample selectedSample = dgvSamples.CurrentRow.DataBoundItem as Sample;
                 var id = selectedSample.IdSample.ToString();
-                SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-                SqlCommand cmd = new SqlCommand("DELETE FROM Samples WHERE IdSample = '" + id + "'", DB);
-                DB.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                DB.Close();
+
+                string sql = $"DELETE FROM Samples WHERE IdSample = '" + id + "'";
+
+                DB.OpenConnection();
+                DB.ExecuteCommand(sql);
+                DB.CloseConnection();
                 ShowSamples();
             }
         }
@@ -61,6 +65,11 @@ namespace Analysis_Monitor
             FrmSampleEvidention frmSampleEvidention = new FrmSampleEvidention(selectedSample);
             frmSampleEvidention.ShowDialog();
             ShowSamples();
+        }
+
+        private void dgvSamples_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Analysis_Monitor.Models;
+﻿using DBLayer;
+using Analysis_Monitor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,9 @@ namespace Analysis_Monitor.Repositories
         {
             Patient patient = null;
 
-            SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Patients WHERE IdPatient = '" + id +"'", DB);
-            DB.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-
+            string sql = $"SELECT * FROM Patients WHERE IdPatient = '" + id + "'";
+            DB.OpenConnection();
+            SqlDataReader reader = DB.GetDataReader(sql);
             if (reader.HasRows)
             {
                 reader.Read();
@@ -27,7 +26,7 @@ namespace Analysis_Monitor.Repositories
                 reader.Close();
             }
 
-            DB.Close();
+            DB.CloseConnection();
             return patient;
         }
 

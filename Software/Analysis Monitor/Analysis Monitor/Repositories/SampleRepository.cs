@@ -1,4 +1,5 @@
-﻿using Analysis_Monitor.Models;
+﻿using DBLayer;
+using Analysis_Monitor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,9 @@ namespace Analysis_Monitor.Repositories
         {
             Sample sample = null;
 
-            SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Samples WHERE IdSample = '" + id + "'", DB);
-            DB.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            string sql = $"SELECT * FROM Samples WHERE IdSample = '" + id + "'";
+            DB.OpenConnection();
+            SqlDataReader reader = DB.GetDataReader(sql);
    
             if (reader.HasRows)
             {
@@ -27,17 +27,16 @@ namespace Analysis_Monitor.Repositories
                 reader.Close();
             }
 
-            DB.Close();
+            DB.CloseConnection();
             return sample;
         }
 
         public static List<Sample> GetSamples()
         {
             var samples = new List<Sample>();
-            SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Samples", DB);
-            DB.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            string sql = $"SELECT * FROM Samples";
+            DB.OpenConnection();
+            SqlDataReader reader = DB.GetDataReader(sql);
 
             while (reader.Read())
             {
@@ -46,6 +45,7 @@ namespace Analysis_Monitor.Repositories
             }
 
             reader.Close();
+            DB.CloseConnection();
             return samples;
         }
 
@@ -71,23 +71,13 @@ namespace Analysis_Monitor.Repositories
             return sample;
         }
 
-        /*public static void InsertSample(Sample sample)
-        {
-            SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-            SqlCommand cmd = new SqlCommand("INSERT INTO Samples (IdPatient,TimeOfReceipt,SampleType,SampleInfo) VALUES ({sample.IdPatient},GETDATE(),{sample.SampleType},{sample.SampleInfo})", DB);
-            DB.Open();
-            cmd.ExecuteNonQuery();
-            DB.Close();
-        }
-        */
         public static Sample GetMaxID()
         {
             Sample sample = null;
 
-            SqlConnection DB = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Samples WHERE IdSample=(SELECT MAX(IdSample) FROM Samples)", DB);
-            DB.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
+            string sql = $"SELECT * FROM Samples WHERE IdSample=(SELECT MAX(IdSample) FROM Samples)";
+            DB.OpenConnection();
+            SqlDataReader reader = DB.GetDataReader(sql);
 
             if (reader.HasRows)
             {
@@ -95,7 +85,7 @@ namespace Analysis_Monitor.Repositories
                 sample = CreateObject(reader);
                 reader.Close();
             }
-            DB.Close();
+            DB.CloseConnection();
             return sample;
         }
     }

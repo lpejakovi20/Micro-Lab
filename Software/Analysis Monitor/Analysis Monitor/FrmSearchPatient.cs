@@ -33,9 +33,9 @@ namespace Analysis_Monitor
             if (SearchedPatient!=null)
             {
                 FrmSampleEvidention frmSampleEvidention = new FrmSampleEvidention(null);
-                Hide();
+                this.Hide();
                 frmSampleEvidention.ShowDialog();
-                Close();
+                this.Close();
             }
             else
             {
