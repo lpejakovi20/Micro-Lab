@@ -92,6 +92,7 @@ namespace Analysis_Monitor
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             txtSearchIdPatient.Text = "";
+            txtSearchIdPatient.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffffff");
             ShowSamples(null);
         }
     }
