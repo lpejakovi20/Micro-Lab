@@ -31,10 +31,12 @@ namespace Analysis_Monitor.Repositories
             return sample;
         }
 
-        public static List<Sample> GetSamples()
+        public static List<Sample> GetSamples(string id)
         {
             var samples = new List<Sample>();
-            string sql = $"SELECT * FROM Samples";
+            string sql;
+            if (id == null) sql = $"SELECT * FROM Samples";
+            else sql = $"SELECT * FROM Samples WHERE IdPatient='" + id +"'";
             DB.OpenConnection();
             SqlDataReader reader = DB.GetDataReader(sql);
 
@@ -48,36 +50,14 @@ namespace Analysis_Monitor.Repositories
             DB.CloseConnection();
             return samples;
         }
-        public static Sample GetMaxID()
-        {
-            Sample sample = null;
-
-            string sql = $"SELECT * FROM Samples WHERE IdSample=(SELECT MAX(IdSample) FROM Samples)";
-            DB.OpenConnection();
-            SqlDataReader reader = DB.GetDataReader(sql);
-
-            if (reader.HasRows)
-            {
-                reader.Read();
-                sample = CreateObject(reader);
-                reader.Close();
-            }
-            DB.CloseConnection();
-            return sample;
-        }
 
         public static void InsertSample(string IdPatient, DateTime TimeOfReceipt, string IdEmployee, string SampleType, string SampleInfo)
         {
-            SqlConnection db = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
-            SqlCommand cmd = new SqlCommand("INSERT INTO Samples (IdPatient,TimeOfReceipt,IdEmployee,SampleType,SampleInfo) VALUES (@IdPatient, @TimeOfReceipt, @IdEmployee,@SampleType,@SampleInfo)", db);
-            db.Open();
-            cmd.Parameters.AddWithValue("@IdPatient", IdPatient);
-            cmd.Parameters.AddWithValue("@SampleType", SampleType);
-            cmd.Parameters.AddWithValue("@SampleInfo", SampleInfo);
-            cmd.Parameters.AddWithValue("@TimeOfReceipt", TimeOfReceipt);
-            cmd.Parameters.AddWithValue("@IdEmployee", IdEmployee);
-            cmd.ExecuteNonQuery();
-            db.Close();
+            string format = "yyyy-MM-dd HH:mm:ss";
+            string sql = $"INSERT INTO Samples (IdPatient,TimeOfReceipt,IdEmployee,SampleType,SampleInfo) VALUES ('{IdPatient}', '{TimeOfReceipt.ToString(format)}', '{IdEmployee}','{SampleType}','{SampleInfo}')";
+            DB.OpenConnection();
+            DB.ExecuteCommand(sql);
+            DB.CloseConnection();
         }
 
         public static void UpdateSample(string IdEmployee, string SampleType, string SampleInfo, int IdSample)
@@ -97,13 +77,6 @@ namespace Analysis_Monitor.Repositories
             DB.CloseConnection();
         }
 
-        public static void RefreshTable()
-        {
-            DB.OpenConnection();
-            string sql = $"TRUNCATE TABLE Samples";
-            DB.ExecuteCommand(sql);
-            DB.CloseConnection();
-        }
         private static Sample CreateObject(SqlDataReader reader)
         {
             int idSample = int.Parse(reader["IdSample"].ToString());

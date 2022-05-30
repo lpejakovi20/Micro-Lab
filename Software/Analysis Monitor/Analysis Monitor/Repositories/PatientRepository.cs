@@ -30,7 +30,12 @@ namespace Analysis_Monitor.Repositories
             return patient;
         }
         public static void InsertPatient(string IdPatient, string FirstName, string LastName, string PhoneNum, string Email, DateTime BirthDate, string ResidentialAddress)
-        {
+        { 
+            string sql = $"INSERT INTO Patients (IdPatient, FirstName, LastName, PhoneNum, Email, ResidentialAddress, BirthDate) VALUES ('{IdPatient}', '{FirstName}', '{LastName}', '{PhoneNum}', '{Email}', '{ResidentialAddress}', '{BirthDate:yyyyMMdd}')";
+            DB.OpenConnection();
+            DB.ExecuteCommand(sql);
+            DB.CloseConnection();
+            /*
             SqlConnection db = new SqlConnection(@"Data Source=31.147.204.119\PISERVER,1433;Initial Catalog=lpejakovi20_DB;Persist Security Info=True;User ID=lpejakovi20;Password=Q=}o18]E");
             SqlCommand cmd = new SqlCommand("INSERT INTO Patients (IdPatient, FirstName, LastName, PhoneNum, Email, ResidentialAddress, BirthDate) VALUES (@IdPatient, @FirstName, @LastName, @PhoneNum, @Email, @ResidentialAddress, @BirthDate)",db);
             db.Open();
@@ -43,6 +48,7 @@ namespace Analysis_Monitor.Repositories
             cmd.Parameters.AddWithValue("@ResidentialAddress", ResidentialAddress);
             cmd.ExecuteNonQuery();
             db.Close();
+            */
         }
 
         private static Patient CreateObject(SqlDataReader reader)

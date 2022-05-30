@@ -22,24 +22,31 @@ namespace Analysis_Monitor
             InitializeComponent();
         }
 
-        public void ShowSamples()
+        public void ShowSamples(string id)
         {
-            var samples = SampleRepository.GetSamples();
-            dgvSamples.DataSource = samples;
-
+            if (id != null)
+            {
+                var samples = SampleRepository.GetSamples(id);
+                dgvSamples.DataSource = samples;
+            }
+            else
+            {
+                var samples = SampleRepository.GetSamples(null);
+                dgvSamples.DataSource = samples;
+            }
         }
 
         private void FrmSamples_Load(object sender, EventArgs e)
         {
             DB.SetConfiguration("lpejakovi20_DB", "lpejakovi20", "Q=}o18]E");
-            ShowSamples();
+            ShowSamples(null);
         }
 
         private void btnAddSample_Click(object sender, EventArgs e)
         {
             FrmPatientSearch frmPatientSearch = new FrmPatientSearch();
             frmPatientSearch.ShowDialog();
-            ShowSamples();
+            ShowSamples(null);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -51,7 +58,7 @@ namespace Analysis_Monitor
                 var id = selectedSample.IdSample;
                 SampleRepository.DeleteSample(id);
                 
-                ShowSamples();
+                ShowSamples(null);
             }
         }
 
@@ -60,8 +67,32 @@ namespace Analysis_Monitor
             Sample selectedSample = dgvSamples.CurrentRow.DataBoundItem as Sample;
             FrmSampleEvidention frmSampleEvidention = new FrmSampleEvidention(selectedSample);
             frmSampleEvidention.ShowDialog();
-            ShowSamples();
+            if (txtSearchIdPatient.Text == "" || PatientRepository.GetPatient(txtSearchIdPatient.Text) == null)
+            {
+                ShowSamples(null);
+            }
+            else
+            {
+                ShowSamples(txtSearchIdPatient.Text);
+            }
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if(txtSearchIdPatient.Text == "" || PatientRepository.GetPatient(txtSearchIdPatient.Text) == null)
+            {
+                txtSearchIdPatient.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
+            }
+            else
+            {
+                ShowSamples(txtSearchIdPatient.Text);
+            }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            txtSearchIdPatient.Text = "";
+            ShowSamples(null);
+        }
     }
 }

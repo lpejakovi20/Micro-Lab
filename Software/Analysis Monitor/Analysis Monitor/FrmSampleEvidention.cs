@@ -28,32 +28,23 @@ namespace Analysis_Monitor
             cboSampleType.DataSource = SampleType;
             cboSampleType.DropDownStyle = ComboBoxStyle.DropDownList;
 
+            var IdEmployee = new[] { "95423216047", "26197467369", "71476987055", "30924526004", "68247423134" };
+            cboIdEmployee.DataSource = IdEmployee;
+            cboIdEmployee.DropDownStyle = ComboBoxStyle.DropDownList;
+
             if (selectedSample == null)
             {
                 if (FrmPatientSearch.NewPatient == null) txtPatientId.Text = FrmPatientSearch.SearchedPatient.IdPatient;
                 else txtPatientId.Text = FrmPatientSearch.NewPatient;
                 
-                if (SampleRepository.GetMaxID() != null)
-                {
-                    var pomocna = SampleRepository.GetMaxID().IdSample;
-                    var druga = (pomocna + 1).ToString();
-                    txtSampleId.Text = druga;
-                }
-                else
-                {
-                    SampleRepository.RefreshTable();
-                    txtSampleId.Text = "1";
-                }
-
                 txtTimeOfReceipt.Text = DateTime.Now.ToString();
             }
             else
             {
                 Sample newSample = SampleRepository.GetSample(selectedSample.IdSample);
-                txtSampleId.Text= newSample.IdSample.ToString();
                 txtPatientId.Text = newSample.IdPatient.ToString();
                 txtTimeOfReceipt.Text = newSample.TimeOfReceipt.ToString();
-                txtRecipient.Text = newSample.IdEmployee.ToString();
+                cboIdEmployee.Text = newSample.IdEmployee.ToString();
                 cboSampleType.Text = newSample.SampleType.ToString();
                 txtSampleInfo.Text = newSample.SampleInfo.ToString();
             }
@@ -61,12 +52,12 @@ namespace Analysis_Monitor
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-                if (txtRecipient.Text.Length == 11 && txtSampleInfo.Text != "" && txtRecipient.Text.All(char.IsDigit))
+                if (txtSampleInfo.Text != "")
                 {
 
                     if (sample == null)
                     {
-                        SampleRepository.InsertSample(txtPatientId.Text, DateTime.Parse(txtTimeOfReceipt.Text), txtRecipient.Text, cboSampleType.Text, txtSampleInfo.Text);
+                        SampleRepository.InsertSample(txtPatientId.Text, DateTime.Parse(txtTimeOfReceipt.Text), cboIdEmployee.Text, cboSampleType.Text, txtSampleInfo.Text);
       
                         MessageBox.Show("Uzorak uspješno evidentiran!", "Uzorak evidentiran!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Hide();                       
@@ -75,24 +66,18 @@ namespace Analysis_Monitor
                     }
                     else
                     {
-                        SampleRepository.UpdateSample(txtRecipient.Text, cboSampleType.Text, txtSampleInfo.Text, sample.IdSample);
+                        SampleRepository.UpdateSample(cboIdEmployee.Text, cboSampleType.Text, txtSampleInfo.Text, sample.IdSample);
                         
                         MessageBox.Show("Uzorak uspješno izmijenjen!", "Uzorak izmijenjen!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                        
                         Hide();
                         Close();
+                    }
                 }
-            }
                 else
-                {
-                    if (txtRecipient.Text.Length != 11 || !txtRecipient.Text.All(char.IsDigit))
-                    {
-                        txtRecipient.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
-                    }
-                    else if (txtSampleInfo.Text == "")
-                    {
+                { 
                         txtSampleInfo.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffdddd");
-                    }
+                    
                 }
             
         }

@@ -88,7 +88,7 @@
             // 
             this.txtResidentialAddress.Location = new System.Drawing.Point(312, 254);
             this.txtResidentialAddress.Name = "txtResidentialAddress";
-            this.txtResidentialAddress.Size = new System.Drawing.Size(121, 22);
+            this.txtResidentialAddress.Size = new System.Drawing.Size(238, 22);
             this.txtResidentialAddress.TabIndex = 5;
             // 
             // txtPhoneNum
@@ -102,7 +102,7 @@
             // 
             this.txtEmail.Location = new System.Drawing.Point(312, 339);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(121, 22);
+            this.txtEmail.Size = new System.Drawing.Size(185, 22);
             this.txtEmail.TabIndex = 7;
             // 
             // lblFirstName
